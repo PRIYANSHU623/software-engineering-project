@@ -7,15 +7,18 @@ import { useRouter } from "next/navigation"
 
 function StudentNavbar() {
   return (
-    <nav className="bg-green-800 text-white p-4 flex justify-between items-center">
-      <div className="text-2xl font-bold">Student Panel</div>
+    <nav className="bg-blue-900 text-white p-4 flex justify-between items-center">
+      <div className="flex items-center space-x-4">
+        <img src="/logo.png" alt="IIIT Logo" className="w-12" />
+        <p className="text-lg font-semibold">Training & Placement Cell</p>
+      </div>
       <div>
-      <a href="/officer/dashboard" className="text-blue-300 font-semibold mr-5">Dashboard</a>
-            <button onClick={() => setIsModalOpen(true)} className="hover:text-blue-400 mr-5">Add Job</button>
-            <button onClick={() => setIsTrainingModalOpen(true)} className="hover:text-blue-400 mr-5">Add Training</button>
-            <button onClick={() => handleLogout(true)} className="hover:text-blue-400 mr-5">Logout</button>
-            <a href="/officer/training" className="text-blue-300 font-semibold mr-5">Approved Training</a>
-            <a href="/admin/profile" className="hover:text-blue-400">Profile</a>
+      <a href="/officer/dashboard" className="hover:text-blue-400 mr-5 font-semibold">Dashboard</a>
+            <button onClick={() => setIsModalOpen(true)} className="hover:text-blue-400 font-semibold mr-5">Add Job</button>
+            <button onClick={() => setIsTrainingModalOpen(true)} className="hover:text-blue-400 mr-5 font-semibold">Add Training</button>
+            <a href="/officer/training" className="text-blue-300 mr-5 font-semibold">Approved Training</a>
+            <a href="/officer/profile" className="hover:text-blue-400 mr-5 font-semibold">Profile</a>
+            <a href="/" className="hover:text-blue-400 mr-5 font-semibold">Logout</a>
       </div>
     </nav>
   );
@@ -32,7 +35,7 @@ export default function TrainingProgramsPage() {
   
   const AuthorizeUser = async () => {
     try {
-      const email = sessionStorage.getItem("OfficerEmail")
+      const email = sessionStorage.getItem("userEmail")
       const response = await fetch("/api/auth/role", {
         method: "POST",
         headers: {
@@ -49,11 +52,11 @@ export default function TrainingProgramsPage() {
       const data = await response.json()
       console.log(data)
 
-      if (data.role !== "ADMIN") {
+      if (data.role !== "Officer") {
         return router.push("/unauthorized")
       }
 
-      return router.push("/officer/dashboard")
+      return router.push("/officer/training")
 
     } catch (error) {
       console.error(error)

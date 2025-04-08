@@ -14,6 +14,7 @@ function OfficerNavbar() {
           <a href="/officer/postings" className="px-3 hover:text-gray-300">Manage Postings</a>
           <a href="/officer/applicants" className="px-3 hover:text-gray-300">Applicants</a>
           <a href="/officer/training" className="hover:text-blue-400 mr-5">Approved Training</a>
+          <a href="/officer/profile" className="hover:text-blue-400 mr-5">Profile</a>
           <a href="/logout" className="px-3 hover:text-gray-300">Logout</a>
         </div>
       </nav>
@@ -27,7 +28,7 @@ export default function ManagePostings() {
   
   const AuthorizeUser = async () => {
     try {
-      const email = sessionStorage.getItem("OfficerEmail")
+      const email = sessionStorage.getItem("userEmail")
       const response = await fetch("/api/auth/role", {
         method: "POST",
         headers: {
@@ -44,11 +45,11 @@ export default function ManagePostings() {
       const data = await response.json()
       console.log(data)
 
-      if (data.role !== "ADMIN") {
+      if (data.role !== "officer") {
         return router.push("/unauthorized")
       }
 
-      return router.push("/officer/dashboard")
+      return router.push("/officer/postings")
 
     } catch (error) {
       console.error(error)
@@ -58,7 +59,7 @@ export default function ManagePostings() {
   }
 
   useEffect(() => {
-    AuthorizeUser()
+    // AuthorizeUser()
     const fetchPostings = async () => {
       try {
         const res = await fetch('/api/officer/postings'); // or /api/placement if you prefer

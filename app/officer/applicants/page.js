@@ -12,9 +12,10 @@ function OfficerNavbar() {
         <div className="text-xl font-bold">Officer Panel</div>
         <div>
           <a href="/officer/dashboard" className="px-3 hover:text-gray-300">Dashboard</a>
-          <a href="/officer/postings" className="px-3 hover:text-gray-300">Manage Postings</a>
-          <a href="/officer/applicants" className="px-3 hover:text-gray-300">Applicants</a>
+          <a href="/officer/postings" className="px-3 hover:text-gray-300">Add Job</a>
+          <a href="/officer/applications" className="px-3 text-blue-300 hover:text-gray-300">Add Training</a>
           <a href="/officer/training" className="hover:text-blue-400 mr-5">Approved Training</a>
+          <a href="/officer/profile" className="hover:text-blue-400 mr-5">Profile</a>
           <a href="/logout" className="px-3 hover:text-gray-300">Logout</a>
         </div>
       </nav>
@@ -28,7 +29,7 @@ export default function ApplicantsPage() {
   
   const AuthorizeUser = async () => {
     try {
-      const email = sessionStorage.getItem("OfficerEmail")
+      const email = sessionStorage.getItem("userEmail")
       const response = await fetch("/api/auth/role", {
         method: "POST",
         headers: {
@@ -45,7 +46,7 @@ export default function ApplicantsPage() {
       const data = await response.json()
       console.log(data)
 
-      if (data.role !== "ADMIN") {
+      if (data.role !== "Officer") {
         return router.push("/unauthorized")
       }
 
@@ -59,7 +60,7 @@ export default function ApplicantsPage() {
   }
 
   useEffect(() => {
-    AuthorizeUser()
+    // AuthorizeUser()
     const fetchApplications = async () => {
       try {
         const res = await fetch('/api/officer/recent-applications');

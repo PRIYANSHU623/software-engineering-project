@@ -28,11 +28,11 @@ export default function GalleryPage() {
       const data = await response.json()
       console.log(data)
 
-      if (data.role !== "ADMIN") {
+      if (data.role !== "Admin") {
         return router.push("/unauthorized")
       }
 
-      return router.push("/admin/dashboard")
+      return router.push("/admin/gallery")
 
     } catch (error) {
       console.error(error)
@@ -113,15 +113,16 @@ export default function GalleryPage() {
         <div className="container mx-auto flex justify-between items-center px-6">
           <div className="flex items-center space-x-4">
             <img src="/logo.png" alt="IIIT Logo" className="w-12" />
-            <p className="text-lg font-semibold">Training and Placement Cell Website</p>
+            <p className="text-lg font-semibold">Training &amp; Placement Cell Website</p>
           </div>
           <div>
-            <a href="/admin/dashboard" className="hover:text-blue-400 mr-5">Dashboard</a>
-            <a href="/admin/gallery" className="text-blue-300 font-semibold mr-5">Gallery</a>
-            <a href="/admin/job-postings" className="hover:text-blue-400 mr-5">Job Postings</a>
-            <a href="/admin/training-program" className="hover:text-blue-400 mr-5">Training Program</a>
-            <a href="/admin/users" className="hover:text-blue-400 mr-5">Users</a>
-            <a href="/admin/profile" className="hover:text-blue-400">Profile</a>
+            <a href="/admin/dashboard" className="font-semibold hover:text-blue-300 mr-4">Dashboard</a>
+            <a href="/admin/gallery" className="text-blue-300 font-semibold mr-4">Gallery</a>
+            <a href="/admin/job-postings" className="font-semibold hover:text-blue-300 mr-4">Job Postings</a>
+            <a href="/admin/training-program" className="font-semibold hover:text-blue-300 mr-4">Training Program</a>
+            <a href="/admin/users" className="font-semibold hover:text-blue-300 mr-4">Users</a>
+            <a href="/admin/profile" className="font-semibold hover:text-blue-300 mr-4">Profile</a>
+            <a href="/" className="font-semibold hover:text-blue-300">Logout</a>
           </div>
         </div>
       </div>

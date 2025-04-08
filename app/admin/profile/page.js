@@ -42,11 +42,11 @@ export default function AdminProfile() {
       const data = await response.json()
       console.log(data)
 
-      if (data.role !== "ADMIN") {
+      if (data.role !== "Admin") {
         return router.push("/unauthorized")
       }
 
-      return router.push("/admin/dashboard")
+      return router.push("/admin/profile")
 
     } catch (error) {
       console.error(error)
@@ -138,7 +138,7 @@ export default function AdminProfile() {
   };
 
   const handleLogout = () => {
-    router.push("/portal");
+    router.push("/");
   };
 
   return (
@@ -147,14 +147,16 @@ export default function AdminProfile() {
         <div className="container mx-auto flex justify-between items-center px-6">
           <div className="flex items-center space-x-4">
             <img src="/logo.png" alt="IIIT Logo" className="w-12" />
-            <p className="text-lg font-semibold">Training and Placement Cell Website</p>
+            <p className="text-lg font-semibold">Training &amp; Placement Cell Website</p>
           </div>
           <div>
-            <a href="/admin/dashboard" className="hover:text-blue-400 mr-5">Dashboard</a>
-            <a href="/admin/gallery" className="hover:text-blue-400 mr-5">Gallery</a>
-            <a href="/admin/job-postings" className="hover:text-blue-400 mr-5">Job Postings</a>
-            <a href="/admin/users" className="hover:text-blue-400 mr-5">Users</a>
-            <a href="/admin/profile" className="text-blue-300 font-semibold">Profile</a>
+            <a href="/admin/dashboard" className="font-semibold hover:text-blue-300 mr-4">Dashboard</a>
+            <a href="/admin/gallery" className="font-semibold hover:text-blue-300 mr-4">Gallery</a>
+            <a href="/admin/job-postings" className="font-semibold hover:text-blue-300 mr-4">Job Postings</a>
+            <a href="/admin/training-program" className="font-semibold hover:text-blue-300 mr-4">Training Program</a>
+            <a href="/admin/users" className="font-semibold hover:text-blue-300 mr-4">Users</a>
+            <a href="/admin/profile" className="font-semibold text-blue-300 mr-4">Profile</a>
+            <a href="/" className="font-semibold hover:text-blue-300 mr-4">Logout</a>
           </div>
         </div>
       </div>
@@ -178,17 +180,17 @@ export default function AdminProfile() {
               setChangePassword(true);
               setUpdatedData({ ...updatedData, oldPassword: "", nwPassword: "", confirmPassword: "" });
             }}
-              className="mt-4 w-full bg-red-600 text-white p-2 rounded cursor-pointer">
+              className="mt-4 w-full shadow-md hover:shadow-lg bg-red-600 text-white p-2 rounded cursor-pointer">
               Change Password
             </button>
             <button onClick={() => {
               setIsUpdate(true);
               setUpdatedData({ ...updatedData, name: updatedData.name, oldPassword: "", slogan: updatedData.slogan });
             }}
-              className="mt-4 w-full bg-green-600 text-white p-2 rounded cursor-pointer">
+              className="mt-4 w-full shadow-md hover:shadow-lg bg-green-600 text-white p-2 rounded cursor-pointer">
               Update Profile
             </button>
-            <button onClick={handleLogout} className="mt-4 w-full bg-red-600 text-white p-2 rounded cursor-pointer">
+            <button onClick={handleLogout} className="mt-4 w-full shadow-md hover:shadow-lg bg-red-600 text-white p-2 rounded cursor-pointer">
               Logout
             </button>
           </div>

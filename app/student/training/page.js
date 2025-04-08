@@ -4,14 +4,17 @@ import Footer from "../../foot/footer";
 
 function StudentNavbar() {
   return (
-    <nav className="bg-green-800 text-white p-4 flex justify-between items-center">
-      <div className="text-2xl font-bold">Student Panel</div>
+    <nav className="bg-blue-900 text-white p-4 flex justify-between items-center">
+      <div className="flex items-center space-x-4">
+        <img src="/logo.png" alt="IIIT Logo" className="w-12" />
+        <p className="text-lg font-semibold">Training &amp; Placement Cell</p>
+      </div>
       <div>
-        <a href="/student/dashboard" className="px-4 hover:text-gray-300">Dashboard</a>
-        <a href="/student/training" className="px-4 hover:text-gray-300">Training Program</a>
-        <a href="/student/profile" className="px-4 hover:text-gray-300">Profile</a>
-        <a href="/student/applications" className="px-4 hover:text-gray-300">My Applications</a>
-        <a href="/logout" className="px-4 hover:text-gray-300">Logout</a>
+        <a href="/student/dashboard" className="px-4 font-semibold hover:text-blue-300">Dashboard</a>
+        <a href="/student/training" className="px-4 font-semibold text-blue-300">Training Program</a>
+        <a href="/student/profile" className="px-4 font-semibold hover:text-blue-300">Profile</a>
+        <a href="/student/applications" className="px-4 font-semibold hover:text-blue-300">My Applications</a>
+        <a href="/" className="px-4 font-semibold hover:text-blue-300">Logout</a>
       </div>
     </nav>
   );

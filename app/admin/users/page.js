@@ -33,11 +33,11 @@ export default function UsersPage() {
       const data = await response.json()
       console.log(data)
 
-      if (data.role !== "ADMIN") {
+      if (data.role !== "Admin") {
         return router.push("/unauthorized")
       }
 
-      return router.push("/admin/dashboard")
+      return router.push("/admin/users")
 
     } catch (error) {
       console.error(error)
@@ -111,19 +111,27 @@ export default function UsersPage() {
             <p className="text-lg font-semibold">Training and Placement Cell Website</p>
           </div>
           <div className="">
-            <a href="/admin/dashboard" className="hover:text-blue-400 mr-5">
+            <a href="/admin/dashboard" className="font-semibold hover:text-blue-300 mr-4">
               Dashboard
             </a>
-            <a href="/admin/gallery" className="hover:text-blue-400 mr-5">
+            <a href="/admin/gallery" className="font-semibold hover:text-blue-300 mr-4">
               Gallery
             </a>
-            <a href="/admin/job-postings" className="hover:text-blue-400 mr-5">
+            <a href="/admin/job-postings" className="font-semibold hover:text-blue-300 mr-4">
               Job Postings
             </a>
-            <a href="/admin/users" className="text-blue-300 font-semibold mr-5">
+            <a href="/admin/training-program" className="font-semibold hover:text-blue-300 mr-4">
+              Training Program
+            </a>
+            <a href="/admin/users" className="font-semibold text-blue-300 mr-4">
               Users
             </a>
-            <a href="/admin/profile" className="hover:text-blue-400">Profile</a>
+            <a href="/admin/profile" className="font-semibold hover:text-blue-300 mr-4">
+            Profile
+            </a>
+            <a href="/" className="font-semibold hover:text-blue-300 mr-4">
+              Logout
+            </a>
           </div>
         </div>
       </div>
@@ -143,7 +151,7 @@ export default function UsersPage() {
           <input
             type="text"
             placeholder="Search by Batch..."
-            className="px-4 py-2 border rounded-lg w-80 shadow focus:outline-none text-black focus:ring-2 focus:ring-blue-400"
+            className="border border-gray-300 p-2 w-full placeholder:text-black max-w-md rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />

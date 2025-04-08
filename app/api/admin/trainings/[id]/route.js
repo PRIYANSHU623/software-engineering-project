@@ -46,8 +46,8 @@
 
 
 import { NextResponse } from 'next/server';
-import connectDB from '../../../../database/connectDB';
-import Training from '../../../../models/Training';
+import connectDB from '../../../../../database/connectDB';
+import Training from '../../../../../models/Training';
 
 export async function GET(request, { params }) {
   try {

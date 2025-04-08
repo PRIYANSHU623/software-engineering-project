@@ -1,3 +1,4 @@
+"use client";
 import { useState } from "react";
 import Link from "next/link";
 import { FaUsers, FaStar, FaUniversity, FaFacebook, FaTwitter, FaLinkedin, FaInstagram } from "react-icons/fa";

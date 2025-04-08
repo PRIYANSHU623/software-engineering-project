@@ -171,13 +171,13 @@ export default function Auth() {
                         sessionStorage.setItem("token", data.token);
                     }
                     sessionStorage.setItem("studentId", data.id);
-                    sessionStorage.setItem("studentEmail", formData.email)
+                    sessionStorage.setItem("userEmail", formData.email)
                     router.push("/student/dashboard");
                 } else if (isOfficer && data.role === "Officer") {
-                    sessionStorage.setItem("officerEmail", formData.email)
+                    sessionStorage.setItem("userEmail", formData.email)
                     router.push("/officer/dashboard");
                     } else if (isAdmin && data.role === "Admin") {
-                    sessionStorage.setItem("adminEmail", formData.email)
+                    sessionStorage.setItem("userEmail", formData.email)
                     router.push("/admin/dashboard");
                     } else {
                     setError("Invalid Credentials");

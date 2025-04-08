@@ -188,9 +188,9 @@ export default function Home() {
       }
 
       const data = await response.json()
-      console.log(data)
+      // console.log(data.role)
 
-      if (data.role !== "ADMIN") {
+      if (data.role !== "Admin") {
         return router.push("/unauthorized")
       }
 
@@ -243,33 +243,45 @@ export default function Home() {
           <nav className="space-x-4">
             <a
               href="/admin/dashboard"
-              className="text-blue-300 hover:text-white font-semibold"
+              className="text-blue-300 font-semibold"
             >
               Dashboard
             </a>
             <a
               href="/admin/gallery"
-              className="hover:text-white transition-colors"
+              className="hover:text-blue-300 transition-colors font-semibold"
             >
               Gallery
             </a>
             <a
               href="/admin/job-postings"
-              className="hover:text-white transition-colors"
+              className="hover:text-blue-300 transition-colors font-semibold"
             >
               Job Postings
             </a>
             <a
+              href="/admin/training-program"
+              className="hover:text-blue-300 transition-colors font-semibold"
+            >
+              Training Program
+            </a>
+            <a
               href="/admin/users"
-              className="hover:text-white transition-colors"
+              className="hover:text-blue-300 transition-colors font-semibold"
             >
               Users
             </a>
             <a
               href="/admin/profile"
-              className="hover:text-white transition-colors"
+              className="hover:text-blue-300 transition-colors font-semibold"
             >
               Profile
+            </a>
+            <a
+              href="/"
+              className="hover:text-blue-300 transition-colors font-semibold"
+            >
+              Logout
             </a>
           </nav>
         </div>
@@ -295,7 +307,7 @@ export default function Home() {
           {/* Notifications Section */}
           <aside className="lg:col-span-1 bg-white p-6 rounded-lg shadow border">
             <h3 className="text-xl font-semibold text-gray-800 mb-4">Notifications</h3>
-            <div className="space-y-3 max-h-96 overflow-y-auto">
+            <div className="space-y-3 max-h-full overflow-y-auto">
               {notifs.length > 0 ? (
                 notifs.map((notif, index) => (
                   <p
@@ -319,8 +331,7 @@ export default function Home() {
               filteredJobs.map((job) => (
                 <div
                   key={job._id}
-                  className="bg-white p-6 rounded-lg shadow border hover:shadow-lg transition duration-200"
-                >
+                  className="bg-white p-6 rounded-lg shadow border hover:shadow-lg transition duration-200">
                   <div className="flex items-center justify-between">
                     <span className="bg-gray-200 text-gray-700 text-sm px-2 py-1 rounded">
                       {job.type}

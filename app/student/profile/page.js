@@ -100,12 +100,16 @@ import Router from 'next/router';
 function StudentNavbar() {
   return (
     <nav className="bg-blue-900 text-white p-4 flex justify-between items-center">
-      <div className="text-2xl font-bold">Student Panel</div>
-      <div>
-        <a href="/student/dashboard" className="px-4 hover:text-gray-300">Dashboard</a>
-        <a href="/student/profile" className="px-4 hover:text-gray-300">Profile</a>
-        <a href="/student/applications" className="px-4 hover:text-gray-300">My Applications</a>
-        <a href="/logout" className="px-4 hover:text-gray-300">Logout</a>
+      <div className="flex items-center space-x-4">
+        <img src="/logo.png" alt="IIIT Logo" className="w-12" />
+        <p className="text-lg font-semibold">Training & Placement Cell</p>
+      </div>
+        <div>
+        <a href="/student/dashboard" className="px-4 font-semibold hover:text-blue-300">Dashboard</a>
+        <a href="/student/training" className="px-4 font-semibold hover:text-blue-300">Training</a>
+        <a href="/student/profile" className="px-4 font-semibold text-blue-300">Profile</a>
+        <a href="/student/applications" className="px-4 font-semibold hover:text-blue-300">My Applications</a>
+        <a href="/" className="px-4 font-semibold hover:text-blue-300">Logout</a>
       </div>
     </nav>
   );
@@ -119,7 +123,9 @@ export default function StudentProfile() {
 
   useEffect(() => {
     if (typeof window !== "undefined") {
-      setUserEmail(sessionStorage.getItem("userEmail"));
+      const email = sessionStorage.getItem("userEmail");
+      console.log("Fetched email from sessionStorage:", email); // Add this line
+      setUserEmail(email);
     }
   }, []);
 
@@ -134,7 +140,7 @@ export default function StudentProfile() {
       setLoading(true);
       try {
         const res = await axios.get(`/api/students/profile?email=${encodeURIComponent(userEmail)}`);
-        
+        console.log("Response data:", res.data);
         if (res.data.ok) {
           setProfile(res.data.studentProfile);
         } else {
@@ -155,7 +161,7 @@ export default function StudentProfile() {
     <div className="bg-gray-50 min-h-screen">
       <StudentNavbar />
       <div className="container mx-auto px-6 py-10">
-        <h1 className="text-4xl font-bold text-center mb-8 text-black">My Profile</h1>
+        <h1 className="text-4xl font-bold text-center mb-8 text-green-800">My Profile</h1>
         
         {error && (
           <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-6 max-w-md mx-auto">
@@ -169,7 +175,7 @@ export default function StudentProfile() {
         {loading ? (
   <p className="text-center text-gray-600">Loading profile...</p>
 ) : profile ? (
-  <div className="bg-white shadow-lg p-6 rounded-lg max-w-full mx-auto">
+  <div className="bg-white shadow-md hover:shadow-lg p-6 rounded-lg max-w-full mx-auto">
     <div className="grid grid-cols-3 gap-4 text-lg text-center">
       {/* Header Row */}
       <div className="font-bold text-green-800">Name</div>

@@ -29,11 +29,11 @@ export default function TrainingProgramsPage() {
       const data = await response.json()
       console.log(data)
 
-      if (data.role !== "ADMIN") {
+      if (data.role !== "Admin") {
         return router.push("/unauthorized")
       }
 
-      return router.push("/admin/dashboard")
+      return router.push("/admin/training-program")
 
     } catch (error) {
       console.error(error)
@@ -110,22 +110,27 @@ const handleApprove = async (training) => {
             <p className="text-lg font-semibold">Training and Placement Cell Website</p>
           </div>
           <div className="">
-            <a href="/admin/dashboard" className="hover:text-blue-400 mr-5">
+            <a href="/admin/dashboard" className="font-semibold hover:text-blue-300 mr-4">
               Dashboard
             </a>
-            <a href="/admin/gallery" className="hover:text-blue-400 mr-5">
+            <a href="/admin/gallery" className="font-semibold hover:text-blue-300 mr-4">
               Gallery
             </a>
-            <a href="/admin/job-postings" className="hover:text-blue-400 mr-5">
+            <a href="/admin/job-postings" className="font-semibold hover:text-blue-300 mr-4">
               Job Postings
             </a>
-            <a href="/admin/training-program" className="text-blue-300 font-semibold mr-5">
+            <a href="/admin/training-program" className="text-blue-300 font-semibold mr-4">
               Training Programs
             </a>
-            <a href="/admin/users" className="hover:text-blue-400 mr-5">
+            <a href="/admin/users" className="font-semibold hover:text-blue-300 mr-4">
               Users
             </a>
-            <a href="/admin/profile" className="hover:text-blue-400">Profile</a>
+            <a href="/admin/profile" className="font-semibold hover:text-blue-300 mr-4">
+            Profile
+            </a>
+            <a href="/" className="font-semibold hover:text-blue-300 mr-4">
+              Logout
+            </a>
           </div>
         </div>
       </div>

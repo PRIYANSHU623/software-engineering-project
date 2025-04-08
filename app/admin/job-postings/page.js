@@ -29,11 +29,11 @@ export default function JobPostingsPage() {
       const data = await response.json()
       console.log(data)
 
-      if (data.role !== "ADMIN") {
+      if (data.role !== "Admin") {
         return router.push("/unauthorized")
       }
 
-      return router.push("/admin/dashboard")
+      return router.push("/admin/job-postings")
 
     } catch (error) {
       console.error(error)
@@ -103,28 +103,31 @@ export default function JobPostingsPage() {
             <p className="text-lg font-semibold">Training and Placement Cell Website</p>
           </div>
           <div className="">
-            <a href="/admin/dashboard" className="hover:text-blue-400 mr-5">
+            <a href="/admin/dashboard" className="font-semibold hover:text-blue-300 mr-4">
               Dashboard
             </a>
-            <a href="/admin/gallery" className="hover:text-blue-400 mr-5">
+            <a href="/admin/gallery" className="font-semibold hover:text-blue-300 mr-4">
               Gallery
             </a>
-            <a href="/admin/job-postings" className="text-blue-300 font-semibold mr-5">
+            <a href="/admin/job-postings" className="font-semibold text-blue-300 mr-4">
               Job Postings
             </a>
-            <a href="/admin/training-program" className="hover:text-blue-400 mr-5">Training Program</a>
+            <a href="/admin/training-program" className="font-semibold hover:text-blue-300 mr-4">Training Program</a>
 
-            <a href="/admin/users" className="hover:text-blue-400 mr-5">
+            <a href="/admin/users" className="font-semibold hover:text-blue-300 mr-4">
               Users
             </a>
-            <a href="/admin/profile" className="hover:text-blue-400">
+            <a href="/admin/profile" className="font-semibold hover:text-blue-300 mr-4">
               Profile
+            </a>
+            <a href="/" className="font-semibold hover:text-blue-300">
+              Logout
             </a>
           </div>
         </div>
       </div>
       <div className="container mx-auto px-4 py-8">
-        <h1 className="text-3xl font-bold mb-6 text-center text-gray-800">
+        <h1 className="text-3xl font-bold mb-6 text-center text-green-800">
           Job Postings Management
         </h1>
 
@@ -133,7 +136,7 @@ export default function JobPostingsPage() {
             jobPostings.map((job) => (
               <div
                 key={job._id}
-                className="p-4 mb-5 rounded-lg shadow-lg border"
+                className="p-4 mb-5 rounded-lg shadow-md hover:shadow-lg border"
               >
                 <span className="bg-gray-200 text-gray-700 text-sm px-2 py-1 rounded">
                   {job.type}

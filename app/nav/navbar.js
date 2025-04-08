@@ -12,13 +12,13 @@ const Navbar = ({ item }) => {
             <div className="container mx-auto flex justify-between items-center px-6">
                 <div className="flex items-center space-x-4">
                     <img src="logo.png" alt="IIIT Logo" className="w-12" />
-                    <p className="text-lg font-semibold">Training and Placement Cell Website</p>
+                    <p className="text-lg font-semibold">Training &amp; Placement Cell</p>
                 </div>
                 <div>
                     <ul className="flex space-x-6">
                         {navItems.map((items) => (
                             <li key={items.name}>
-                                <a href={items.link} className={`hover:text-blue-400 ${item === items.name && "text-blue-300 font-semibold"}`}>
+                                <a href={items.link} className={`hover:text-blue-300 font-semibold ${item === items.name && "text-blue-300 font-semibold"}`}>
                                     {items.name}
                                 </a>
                             </li>

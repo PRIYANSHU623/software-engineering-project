@@ -6,14 +6,17 @@ import { useSession } from "next-auth/react";
 // Custom Student Navbar
 function StudentNavbar() {
   return (
-    <nav className="bg-green-800 text-white p-4 flex justify-between items-center">
-      <div className="text-2xl font-bold">Student Panel</div>
+    <nav className="bg-blue-900 text-white p-4 flex justify-between items-center">
+      <div className="flex items-center space-x-4">
+        <img src="/logo.png" alt="IIIT Logo" className="w-12" />
+        <p className="text-lg font-semibold">Training &amp; Placement Cell</p>
+      </div>
       <div>
-        <a href="/student/dashboard" className="px-4 hover:text-gray-300">Dashboard</a>
-        <a href="/student/training" className="px-4 hover:text-gray-300">Training</a>
-        <a href="/student/profile" className="px-4 hover:text-gray-300">Profile</a>
-        <a href="/student/applications" className="px-4 hover:text-gray-300">My Applications</a>
-        <a href="/logout" className="px-4 hover:text-gray-300">Logout</a>
+        <a href="/student/dashboard" className="px-4 font-semibold text-blue-300">Dashboard</a>
+        <a href="/student/training" className="px-4 font-semibold hover:text-blue-300">Training</a>
+        <a href="/student/profile" className="px-4 font-semibold hover:text-blue-300">Profile</a>
+        <a href="/student/applications" className="px-4 font-semibold hover:text-blue-300">My Applications</a>
+        <a href="/" className="px-4 font-semibold hover:text-blue-300">Logout</a>
       </div>
     </nav>
   );
@@ -266,15 +269,16 @@ export default function StudentDashboard() {
             <input
               type="text"
               placeholder="Search job postings..."
-              className="border border-gray-300 p-2 w-full max-w-md rounded"
+              className="border border-gray-300 p-2 w-full placeholder:text-black max-w-md rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
             />
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="lg:col-span-3 space-y-6">
             {filteredJobPostings.length > 0 ? (
               filteredJobPostings.map((job) => (
-                <div key={job._id} className="bg-white shadow-md rounded-lg p-6 hover:shadow-xl transition duration-300">
+                <div key={job._id} 
+                className="bg-white p-6 rounded-lg shadow border hover:shadow-lg transition duration-200">
                   <h3 className="text-xl font-bold text-gray-800">{job.title}</h3>
                   <p className="text-gray-600">{job.company}</p>
                   <p className="mt-2 text-gray-700">{job.description.slice(0, 100)}...</p>
@@ -326,7 +330,7 @@ export default function StudentDashboard() {
         </section>
 
         {/* Applied Jobs Section */}
-        <section className="mb-12">
+        {/* <section className="mb-12">
           <h2 className="text-3xl font-semibold text-gray-800 mb-4">
             My Applications
           </h2>
@@ -362,26 +366,28 @@ export default function StudentDashboard() {
               </tbody>
             </table>
           </div>
-        </section>
+        </section> */}
 
         {/* Notifications Section */}
-        <section className="mb-12">
-          <h2 className="text-3xl font-semibold text-gray-800 mb-4">
-            Notifications
-          </h2>
-          <div className="space-y-4">
-            {notifications.length > 0 ? (
-              notifications.map((note) => (
-                <div key={note._id} className="bg-white shadow p-4 rounded-lg">
-                  <p className="font-bold text-gray-800">{note.title}</p>
-                  <p className="text-gray-600">{note.message}</p>
-                </div>
-              ))
-            ) : (
-              <p className="text-gray-600">No notifications yet.</p>
-            )}
-          </div>
-        </section>
+          <aside className="lg:col-span-1 bg-white p-6 rounded-lg shadow border">
+            <h3 className="text-xl font-semibold text-gray-800 mb-4">Notifications</h3>
+            <div className="space-y-3 max-h-96 overflow-y-auto">
+              {notifications.length > 0 ? (
+                notifications.map((notif, index) => (
+                  <p
+                    key={notif._id || index}
+                    className="p-2 bg-gray-100 rounded text-gray-700 text-sm hover:bg-gray-200 transition"
+                  >
+                    {notifications.message}
+                  </p>
+                ))
+              ) : (
+                <p className="text-center text-gray-500 text-lg">
+                  No New Notifications
+                </p>
+              )}
+            </div>
+          </aside>
       </div>
 
       <Footer />

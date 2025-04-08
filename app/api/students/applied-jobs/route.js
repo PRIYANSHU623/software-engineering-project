@@ -7,7 +7,7 @@ export async function GET(req) {
   await connectDB();
   try {
     const { searchParams } = new URL(req.url);
-    const email = searchParams.get("email");
+    const email = req.nextUrl.searchParams.get("email");
     console.log("AppliedJobs GET: email =", email);
     if (!email) {
       return NextResponse.json(

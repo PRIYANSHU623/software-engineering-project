@@ -54,7 +54,7 @@ export default function Home() {
   
   const AuthorizeUser = async () => {
     try {
-      const email = sessionStorage.getItem("officerEmail")
+      const email = sessionStorage.getItem("userEmail")
       const response = await fetch("/api/auth/role", {
         method: "POST",
         headers: {
@@ -89,7 +89,6 @@ export default function Home() {
   }
 
   useEffect(() => {
-    AuthorizeUser()
     const fetchData = async () => {
       try {
         const [jobsRes, notifsRes, trainingsRes] = await Promise.all([
@@ -97,6 +96,8 @@ export default function Home() {
           axios.get("/api/notifications"),
           axios.get("/api/admin/trainings")
         ]);
+
+        // console.log("Fetched trainings response:", json);
         
         setJobs(Array.isArray(jobsRes.data) ? jobsRes.data : []);
         setNotifs(Array.isArray(notifsRes.data) ? notifsRes.data : []);
@@ -110,6 +111,7 @@ export default function Home() {
         setNotifs([]);
       }
     };
+    AuthorizeUser()
     fetchData();
   }, []);
 
@@ -126,6 +128,7 @@ export default function Home() {
 };
   const filteredItems = useMemo(() => {
     const searchTerm = search.toLowerCase();
+
     const filteredJobs = jobs.filter(job => 
       job.title.toLowerCase().includes(searchTerm) ||
       job.company.toLowerCase().includes(searchTerm)
@@ -241,15 +244,15 @@ export default function Home() {
         <div className="container mx-auto flex justify-between items-center px-6">
           <div className="flex items-center space-x-4">
             <img src="/logo.png" alt="IIIT Logo" className="w-12" />
-            <p className="text-lg font-semibold">Training and Placement Cell Website</p>
+            <p className="text-lg font-semibold">Training &amp; Placement Cell Website</p>
           </div>
           <div>
-            <a href="/officer/dashboard" className="text-blue-300 font-semibold mr-5">Dashboard</a>
-            <button onClick={() => setIsModalOpen(true)} className="hover:text-blue-400 mr-5">Add Job</button>
-            <button onClick={() => setIsTrainingModalOpen(true)} className="hover:text-blue-400 mr-5">Add Training</button>
-            <a href="/officer/training" className="hover:text-blue-400 mr-5">Approved Training</a>
-            <a href="/admin/profile" className="hover:text-blue-400">Profile</a>
-            <button onClick={() => handleLogout(true)} className="hover:text-blue-400 mr-5">Logout</button>
+            <a href="/officer/dashboard" className="text-blue-400 font-semibold mr-5">Dashboard</a>
+            <button onClick={() => setIsModalOpen(true)} className="hover:text-blue-400 font-semibold mr-5">Add Job</button>
+            <button onClick={() => setIsTrainingModalOpen(true)} className="hover:text-blue-400 mr-5 font-semibold">Add Training</button>
+            <a href="/officer/training" className="hover:text-blue-400 mr-5 font-semibold">Approved Training</a>
+            <a href="/officer/profile" className="hover:text-blue-400 font-semibold">Profile </a>
+            <button onClick={() => handleLogout(true)} className="hover:text-blue-400 font-semibold mr-5">Logout</button>
           </div>
         </div>
       </div>
@@ -258,39 +261,45 @@ export default function Home() {
         <h1 className="text-3xl font-bold mb-8 text-center text-gray-800">Officer Dashboard</h1>
         
         {/* Search Bar */}
-        <div className="flex justify-center mt-6">
-          <input
-            type="text"
-            placeholder="Search jobs or trainings..."
-            className="bg-white px-4 py-2 rounded border text-black w-80"
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-          />
+        <div className="flex justify-center mb-8">
+        <input
+          type="text"
+          placeholder="Search job postings..."
+          className="w-full max-w-md px-4 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 placeholder-gray-500"
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+        />
         </div>
 
         {/* Main Content */}
-        <div className="grid grid-cols-4 gap-6 p-6">
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
           {/* Notifications Section */}
-          <div className="p-6 col-span-1 justify-items-center">
-            <h3 className="font-bold text-black text-lg">Notifications</h3>
-            <div className="p-6 mb-5 rounded-lg shadow-lg border w-80 text-center h-9/12">
+          <aside className="lg:col-span-1 bg-white p-6 rounded-lg shadow border">
+            <h3 className="text-xl font-semibold text-gray-800 mb-4">Notifications</h3>
+            <div className="space-y-3 max-h-96 overflow-y-auto">
               {notifs.length > 0 ? (
-                notifs.map((notif) => (
-                  <p key={notif._id} className="text-gray-700 text-xl">
+                notifs.map((notif, index) => (
+                  <p
+                    key={notif._id || index}
+                    className="p-2 bg-gray-100 rounded text-gray-700 text-sm hover:bg-gray-200 transition"
+                  >
                     {notif.message}
                   </p>
                 ))
               ) : (
-                <p className="text-black text-xl">No New Notifications</p>
+                <p className="text-center text-gray-500 text-lg">
+                  No New Notifications
+                </p>
               )}
             </div>
-          </div>
+          </aside>
 
           {/* Jobs and Trainings Section */}
-          <div className="p-6 col-span-3 justify-items-center">
+          <section className="lg:col-span-3 space-y-6">
             {filteredItems.length > 0 ? (
               filteredItems.map((item) => (
-                <div key={item._id} className="p-4 mb-5 rounded-lg shadow-lg border w-full">
+                <div key={item._id} 
+                className="bg-white p-6 rounded-lg shadow border hover:shadow-lg transition duration-200">
                   <span className="bg-gray-200 text-gray-700 text-sm px-2 py-1 rounded">
                     {item.type || 'Training Program'}
                   </span>
@@ -406,7 +415,7 @@ export default function Home() {
             ) : (
               <p className="text-black text-2xl">No Results Found</p>
             )}
-          </div>
+          </section>
         </div>
       </div>
 
