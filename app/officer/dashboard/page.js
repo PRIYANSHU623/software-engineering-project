@@ -233,34 +233,34 @@ export default function Home() {
     }
   };
 
-  const handleVerifyStudent = async (studentId, jobId) => {
-    try {
-      setVerifyingStudent(studentId);
+  // const handleVerifyStudent = async (studentId, jobId) => {
+  //   try {
+  //     setVerifyingStudent(studentId);
       
-      // Send API request to verify the student
-      const response = await axios.post(`/api/admin/verify-student/${studentId}/${jobId}`);
+  //     // Send API request to verify the student
+  //     const response = await axios.post(`/api/admin/verify-student/${studentId}/${jobId}`);
       
-      if (response.status === 200) {
-        // Update the local state to reflect the verification
-        setInterestedStudents(prevStudents => 
-          prevStudents.map(student => 
-            student._id === studentId 
-              ? { ...student, verified: true } 
-              : student
-          )
-        );
+  //     if (response.status === 200) {
+  //       // Update the local state to reflect the verification
+  //       setInterestedStudents(prevStudents => 
+  //         prevStudents.map(student => 
+  //           student._id === studentId 
+  //             ? { ...student, verified: true } 
+  //             : student
+  //         )
+  //       );
         
-        toast.success("Student verified successfully!");
-      } else {
-        toast.error("Failed to verify student. Please try again.");
-      }
-    } catch (error) {
-      console.error("Error verifying student:", error);
-      toast.error("Failed to verify student. Please try again.");
-    } finally {
-      setVerifyingStudent(null);
-    }
-  };
+  //       toast.success("Student verified successfully!");
+  //     } else {
+  //       toast.error("Failed to verify student. Please try again.");
+  //     }
+  //   } catch (error) {
+  //     console.error("Error verifying student:", error);
+  //     toast.error("Failed to verify student. Please try again.");
+  //   } finally {
+  //     setVerifyingStudent(null);
+  //   }
+  // };
 
   const handleLogout = () => {
     sessionStorage.removeItem("studentId");
