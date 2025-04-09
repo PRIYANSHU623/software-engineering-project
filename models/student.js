@@ -17,6 +17,17 @@ const newCard = new mongoose.Schema({
         type: String,
         required: true
     },
+    job: [{
+        job_id: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "Jobs"
+        },
+        status: {
+          type: Boolean,
+          default: false
+        }
+      }]
+      
 }, { versionKey: false });
 
 const Card = mongoose.models.Students || mongoose.model("Students", newCard, "Students");

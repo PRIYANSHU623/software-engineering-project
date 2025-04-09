@@ -3,27 +3,45 @@ import connectDB from "../../../../database/connectDB";
 import JobPostings from "../../../../models/JobPosting";
 import Students from "../../../../models/student";
 
+
 export async function GET(req) {
   await connectDB();
   try {
-    const { searchParams } = new URL(req.url);
     const email = req.nextUrl.searchParams.get("email");
     console.log("AppliedJobs GET: email =", email);
+
     if (!email) {
       return NextResponse.json(
         { ok: false, message: "Email parameter is required" },
         { status: 400 }
       );
     }
+
+    // Find student and filter only applied jobs (status: true)
     const student = await Students.findOne({ email });
+
     if (!student) {
       return NextResponse.json(
         { ok: false, message: "Student not found" },
         { status: 404 }
       );
     }
-    const appliedJobs = await JobPostings.find({ students: { $in: [email] } });
-    return NextResponse.json({ ok: true, appliedJobs, count: appliedJobs.length }, { status: 200 });
+
+    const appliedJobIds = student.job
+      .filter((j) => j.status === true)
+      .map((j) => j.job_id);
+
+    if (appliedJobIds.length === 0) {
+      return NextResponse.json({ ok: true, appliedJobs: [], count: 0 }, { status: 200 });
+    }
+
+    // Fetch job details using those job IDs
+    const appliedJobs = await JobPostings.find({ _id: { $in: appliedJobIds } });
+
+    return NextResponse.json(
+      { ok: true, appliedJobs, count: appliedJobs.length },
+      { status: 200 }
+    );
   } catch (error) {
     console.error("Error in GET /api/student/applied-jobs:", error);
     return NextResponse.json(
@@ -32,6 +50,36 @@ export async function GET(req) {
     );
   }
 }
+
+// export async function GET(req) {
+//   await connectDB();
+//   try {
+//     const { searchParams } = new URL(req.url);
+//     const email = req.nextUrl.searchParams.get("email");
+//     console.log("AppliedJobs GET: email =", email);
+//     if (!email) {
+//       return NextResponse.json(
+//         { ok: false, message: "Email parameter is required" },
+//         { status: 400 }
+//       );
+//     }
+//     const student = await Students.findOne({ email });
+//     if (!student) {
+//       return NextResponse.json(
+//         { ok: false, message: "Student not found" },
+//         { status: 404 }
+//       );
+//     }
+//     const appliedJobs = await JobPostings.find({ students: { $in: [email] } });
+//     return NextResponse.json({ ok: true, appliedJobs, count: appliedJobs.length }, { status: 200 });
+//   } catch (error) {
+//     console.error("Error in GET /api/student/applied-jobs:", error);
+//     return NextResponse.json(
+//       { ok: false, message: error.message },
+//       { status: 500 }
+//     );
+//   }
+// }
 
 export async function POST(req) {
   await connectDB();

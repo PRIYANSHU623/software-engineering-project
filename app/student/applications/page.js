@@ -21,9 +21,17 @@ function StudentNavbar() {
 }
 export default function StudentApplications() {
   const [applications, setApplications] = useState([]);
-  const userEmail = "john@example.com";
+  const [userEmail, setUserEmail] = useState(null);
 
   useEffect(() => {
+    const email = sessionStorage.getItem("userEmail");
+    if (email) {
+      setUserEmail(email);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (!userEmail) return;
     const fetchApplications = async () => {
       try {
         const res = await fetch(`/api/student/applied-jobs?email=${encodeURIComponent(userEmail)}`);

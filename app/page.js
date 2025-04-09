@@ -37,7 +37,7 @@ export default function Home() {
             <h1 className="text-3xl font-bold">Welcome to IIIT Vadodara - International Campus Diu</h1>
             <p className="mt-4 text-lg">Empowering students with world-class training and placement opportunities.</p>
             <div className="mt-6 flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-4">
-              <a href="/IIITV icd_Curriculum_2018.pdf" className="bg-white border text-blue-900 border-white px-4 py-2 rounded-lg font-semibold hover:bg-trasnparent hover:text-blue-900">Download Brochure</a>
+              <a href="/IIITV icd_Curriculum_2018.pdf" download className="bg-white border text-blue-900 border-white px-4 py-2 rounded-lg font-semibold hover:bg-transparent hover:text-white">Download Brochure</a>
               <a href="/portal" className="bg-transparent border border-white px-4 py-2 rounded-lg font-semibold hover:bg-white hover:text-blue-900">Explore Portal</a>
             </div>
           </div>
