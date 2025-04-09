@@ -1,5 +1,6 @@
 import connectDB from "@/database/connectDB";
 import Student from "@/models/student";
+import Job from "@/models/job";  // Import the Job model since we need to update its students array.
 import { NextResponse } from "next/server";
 
 export async function POST(req, { params }) {
@@ -29,7 +30,7 @@ export async function POST(req, { params }) {
 
     // Check if the job is already in the student's job array
     const jobExists = student.job.some(job => job.job_id.toString() === jobId);
-    
+
     if (!jobExists) {
       // Add the job to the student's job array if it doesn't exist
       student.job.push({
@@ -53,13 +54,20 @@ export async function POST(req, { params }) {
       );
     }
 
+    // Remove the verified student from the corresponding job's students array.
+    await Job.findByIdAndUpdate(
+      jobId,
+      { $pull: { students: studentId } },
+      { new: true }
+    );
+
     // Fetch the updated student
     const updatedStudent = await Student.findById(studentId);
 
     console.log("Student verified successfully:", updatedStudent);
 
-    return NextResponse.json({ 
-      ok: true, 
+    return NextResponse.json({
+      ok: true,
       message: "Student verified successfully",
       student: updatedStudent
     });
@@ -70,4 +78,4 @@ export async function POST(req, { params }) {
       { status: 500 }
     );
   }
-} 
+}

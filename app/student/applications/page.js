@@ -34,7 +34,7 @@ export default function StudentApplications() {
     if (!userEmail) return;
     const fetchApplications = async () => {
       try {
-        const res = await fetch(`/api/student/applied-jobs?email=${encodeURIComponent(userEmail)}`);
+        const res = await fetch(`/api/students/applied-jobs?email=${encodeURIComponent(userEmail)}`);
         if (!res.ok) {
           const errorText = await res.text();
           throw new Error(`HTTP error! Status: ${res.status}. Response: ${errorText.slice(0, 100)}`);
@@ -56,25 +56,35 @@ export default function StudentApplications() {
     <div className="bg-gray-50 min-h-screen">
       <StudentNavbar />
       <div className="container mx-auto px-6 py-10">
-        <h1 className="text-4xl font-bold text-center mb-8 text-green-800">My Applications</h1>
+        <h1 className="text-4xl font-bold text-center mb-8 text-black">My Applications</h1>
         <div className="bg-white shadow-lg rounded-lg overflow-x-auto">
           <table className="min-w-full">
-            <thead className="bg-gray-200">
+            <thead className="bg-green-700 text-black">
               <tr>
                 <th className="text-left p-3">Job Title</th>
                 <th className="text-left p-3">Company</th>
+                <th className="text-left p-3">Stipend</th>
+                <th className="text-left p-3">Duration</th>
+                <th className="text-left p-3">Apply Link</th>
                 <th className="text-left p-3">Status</th>
               </tr>
             </thead>
             <tbody>
               {applications.map((app) => (
-                <tr key={app._id} className="border-b hover:bg-gray-100">
+                <tr key={app._id} className="border-b hover:bg-gray-100 text-black">
                   <td className="p-3">{app.title || app.jobTitle}</td>
                   <td className="p-3">{app.company}</td>
+                  <td className="p-3">{app.salary}</td>
+                  <td className="p-3">{app.duration && app.duration_unit? `${app.duration} ${app.duration_unit}`: "N/A"}</td>
+                  <td className="p-3">{app.status === true ?(<a href={app.applyLink || "#"}target="_blank"rel="noopener noreferrer"className="text-black hover:text-blue-600 hover:underline">
+                  Apply
+                  </a>
+                  ) : (
+                  <span className="text-gray-500">Approval Pending.</span>)}</td>
                   <td className="p-3">
-                    <span className="bg-green-100 text-green-800 px-3 py-1 rounded-full">
-                      {app.status || "N/A"}
-                    </span>
+                  <span
+                    className={`px-3 py-1 rounded-full font-semibold ${app.status? "bg-green-100 text-green-800": "bg-yellow-100 text-yellow-800"}`}>{app.status ? "Verified" : "Pending"}
+                  </span>
                   </td>
                 </tr>
               ))}

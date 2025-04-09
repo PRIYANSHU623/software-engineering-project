@@ -1,14 +1,13 @@
 import { NextResponse } from "next/server";
 import connectDB from "../../../../database/connectDB";
-import JobPostings from "../../../../models/JobPosting";
 import Students from "../../../../models/student";
-
 
 export async function GET(req) {
   await connectDB();
+
   try {
     const email = req.nextUrl.searchParams.get("email");
-    console.log("AppliedJobs GET: email =", email);
+    console.log("✅ Fetching verified jobs for:", email);
 
     if (!email) {
       return NextResponse.json(
@@ -17,8 +16,8 @@ export async function GET(req) {
       );
     }
 
-    // Find student and filter only applied jobs (status: true)
-    const student = await Students.findOne({ email });
+    // Populate the job_id field inside the job array
+    const student = await Students.findOne({ email }).populate("job.job_id");
 
     if (!student) {
       return NextResponse.json(
@@ -27,29 +26,32 @@ export async function GET(req) {
       );
     }
 
-    const appliedJobIds = student.job
-      .filter((j) => j.status === true)
-      .map((j) => j.job_id);
+    console.log("🎓 Student found:", student);
+    console.log("🧠 Student.jobs:", student.job);
 
-    if (appliedJobIds.length === 0) {
-      return NextResponse.json({ ok: true, appliedJobs: [], count: 0 }, { status: 200 });
-    }
+    // Filter and map the job data
+    const verifiedJobs = student.job
+      .filter(entry => entry.status === false || entry.status === true && entry.job_id) // make sure job_id is populated
+      .map(entry => ({
+        ...entry.job_id.toObject(), // actual job details
+        status: entry.status        // include the student's application status
+      }));
 
-    // Fetch job details using those job IDs
-    const appliedJobs = await JobPostings.find({ _id: { $in: appliedJobIds } });
+    return NextResponse.json({
+      ok: true,
+      appliedJobs: verifiedJobs,
+      count: verifiedJobs.length,
+    });
 
-    return NextResponse.json(
-      { ok: true, appliedJobs, count: appliedJobs.length },
-      { status: 200 }
-    );
   } catch (error) {
-    console.error("Error in GET /api/student/applied-jobs:", error);
+    console.error("❌ Error fetching verified jobs:", error);
     return NextResponse.json(
-      { ok: false, message: error.message },
+      { ok: false, message: "Internal server error", error: error.message },
       { status: 500 }
     );
   }
 }
+
 
 // export async function GET(req) {
 //   await connectDB();

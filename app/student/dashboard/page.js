@@ -76,16 +76,11 @@ function JobDetailsModal({ job, onClose, onApply }) {
           
           {job.apply_link && (
             <div className="pt-4">
-              <a
-                href={job.apply_link}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-block bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700 transition"
-              >
-                More Details
-              </a>
-            </div>
-          )}
+            <button
+              onClick={onClose}
+              className="inline-block bg-red-600 text-white px-6 py-2 rounded hover:bg-red-700 transition">
+              Close
+            </button></div>)}
 
           {/* Show Apply Now only if status is approved */}
           {job.status === "approved" && (
@@ -155,7 +150,7 @@ export default function StudentDashboard() {
     
 
     fetchJobPostings();
-    fetchAppliedJobs();
+    // fetchAppliedJobs();
     fetchNotifications();
   }, []);
 
