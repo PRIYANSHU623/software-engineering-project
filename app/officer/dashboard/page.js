@@ -102,7 +102,7 @@ export default function Home() {
         
         setJobs(Array.isArray(jobsRes.data) ? jobsRes.data : []);
         setNotifs(Array.isArray(notifsRes.data) ? notifsRes.data : []);
-        setTrainings(Array.isArray(trainingsRes.data) ? trainingsRes.data : []);
+        setTrainings(Array.isArray(trainingsRes.data.training) ? trainingsRes.data : []);
         
       } catch (error) {
         console.error("Error fetching data:", error);
