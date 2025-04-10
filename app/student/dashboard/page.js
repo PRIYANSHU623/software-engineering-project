@@ -13,7 +13,7 @@ function StudentNavbar() {
       </div>
       <div>
         <a href="/student/dashboard" className="px-4 font-semibold text-blue-300">Dashboard</a>
-        <a href="/student/training" className="px-4 font-semibold hover:text-blue-300">Training</a>
+        <a href="/student/training" className="px-4 font-semibold hover:text-blue-300">Training Program</a>
         <a href="/student/profile" className="px-4 font-semibold hover:text-blue-300">Profile</a>
         <a href="/student/applications" className="px-4 font-semibold hover:text-blue-300">My Applications</a>
         <a href="/" className="px-4 font-semibold hover:text-blue-300">Logout</a>
@@ -140,9 +140,10 @@ export default function StudentDashboard() {
 
     const fetchNotifications = async () => {
       try {
-        const res = await fetch("/api/students/notifications");
+        const res = await fetch("/api/students/notification");
         const data = await res.json();
-        setNotifications(data);
+        if (!res.ok) throw new Error(data.message || "Failed to fetch notifications");
+        setNotifications(data.notifications);
       } catch (err) {
         console.error("Error fetching notifications:", err);
       }
@@ -373,7 +374,7 @@ export default function StudentDashboard() {
                     key={notif._id || index}
                     className="p-2 bg-gray-100 rounded text-gray-700 text-sm hover:bg-gray-200 transition"
                   >
-                    {notifications.message}
+                    {notif.message}
                   </p>
                 ))
               ) : (

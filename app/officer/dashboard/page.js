@@ -280,12 +280,12 @@ export default function Home() {
             <p className="text-lg font-semibold">Training &amp; Placement Cell Website</p>
           </div>
           <div>
-            <a href="/officer/dashboard" className="text-blue-400 font-semibold mr-4">Dashboard</a>
-            <button onClick={() => setIsModalOpen(true)} className="hover:text-blue-400 font-semibold mr-4">Add Job</button>
-            <button onClick={() => setIsTrainingModalOpen(true)} className="hover:text-blue-400 mr-4 font-semibold">Add Training</button>
-            <a href="/officer/training" className="hover:text-blue-400 mr-4 font-semibold">Approved Training</a>
-            <a href="/officer/profile" className="hover:text-blue-400 font-semibold mr-4">Profile </a>
-            <button onClick={() => handleLogout(true)} className="hover:text-blue-400 font-semibold">Logout</button>
+            <a href="/officer/dashboard" className="text-blue-300 font-semibold mr-4">Dashboard</a>
+            <button onClick={() => setIsModalOpen(true)} className="hover:text-blue-300 font-semibold mr-4">Add Job</button>
+            <button onClick={() => setIsTrainingModalOpen(true)} className="hover:text-blue-300 mr-4 font-semibold">Add Training</button>
+            <a href="/officer/training" className="hover:text-blue-300 mr-4 font-semibold">Approved Training</a>
+            <a href="/officer/profile" className="hover:text-blue-300 font-semibold mr-4">Profile </a>
+            <button onClick={() => handleLogout(true)} className="hover:text-blue-300 font-semibold">Logout</button>
           </div>
         </div>
       </div>
