@@ -1,9 +1,9 @@
 "use client";
 import axios from "axios";
 import { useEffect, useState, useMemo } from "react";
-import { toast } from "react-toastify"
+import { toast } from "react-toastify";
 // import { useEffect } from "react"
-import { useRouter } from "next/navigation"
+import { useRouter } from "next/navigation";
 
 
 export default function Home() {
@@ -78,8 +78,6 @@ export default function Home() {
         return router.push("/")
       }
 
-
-
       return router.push("/officer/dashboard")
 
     } catch (error) {
@@ -116,17 +114,17 @@ export default function Home() {
     fetchData();
   }, []);
 
-  const fetchData = async () => {
-  try {
-    const fetched = await axios.get("/api/admin/dashboard");
-    const trainingsRes = await axios.get("/api/admin/trainings");
+//   const fetchData = async () => {
+//   try {
+//     const fetched = await axios.get("/api/admin/dashboard");
+//     const trainingsRes = await axios.get("/api/admin/trainings");
     
-    setCards(fetched.data);
-    setTrainings(trainingsRes.data.trainings || trainingsRes.data); // Handle both formats
-  } catch (error) {
-    console.error("Error fetching data:", error);
-  }
-};
+//     setCards(fetched.data);
+//     setTrainings(trainingsRes.data.trainings || trainingsRes.data); // Handle both formats
+//   } catch (error) {
+//     console.error("Error fetching data:", error);
+//   }
+// };
   const filteredItems = useMemo(() => {
     const searchTerm = search.toLowerCase();
 
@@ -135,13 +133,13 @@ export default function Home() {
       job.company.toLowerCase().includes(searchTerm)
     );
     
-    const filteredTrainings = trainings.filter(training =>
-      training.title.toLowerCase().includes(searchTerm) ||
-      training.provider.toLowerCase().includes(searchTerm)
-    );
+    // const filteredTrainings = trainings.filter(training =>
+    //   training.title.toLowerCase().includes(searchTerm) ||
+    //   training.provider.toLowerCase().includes(searchTerm)
+    // );
 
-    return [...filteredJobs, ...filteredTrainings];
-  }, [jobs, trainings, search]);
+    return [...filteredJobs];
+  }, [jobs, search]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;

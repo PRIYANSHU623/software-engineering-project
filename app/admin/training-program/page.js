@@ -90,16 +90,17 @@ const handleApprove = async (training) => {
 
   const handleReject = async (trainingId) => {
     try {
-      const res = await axios.put(`/api/admin/trainings/${trainingId}/reject`);
-      if (res.data.ok) {
+      const res = await axios.delete(`/api/admin/trainings/${trainingId}`);
+      if (res.data.success) {
         fetchTrainingPrograms();
       } else {
-        alert("Failed to reject training");
+        alert("Failed to delete training");
       }
     } catch (error) {
-      console.error("Error rejecting training:", error);
+      console.error("Error deleting training:", error);
     }
   };
+  
 
   return (
     <div className="bg-white min-h-screen">

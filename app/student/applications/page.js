@@ -1,6 +1,8 @@
 'use client';
 import { useState, useEffect } from 'react';
 import Footer from "../../foot/footer";
+import { toast } from "react-toastify";
+import { useRouter } from 'next/navigation';
 
 function StudentNavbar() {
   return (
@@ -23,6 +25,42 @@ export default function StudentApplications() {
   const [applications, setApplications] = useState([]);
   const [userEmail, setUserEmail] = useState(null);
 
+    // const router = useRouter()
+    
+    // const AuthorizeUser = async () => {
+    //   try {
+    //     const email = sessionStorage.getItem("userEmail")
+    //     const response = await fetch("/api/auth/role", {
+    //       method: "POST",
+    //       headers: {
+    //         'Content-Type': 'application/json'
+    //       },
+    //       body: JSON.stringify({ email })
+    //     })
+        
+    //     const data = await response.json()
+    //     console.log(data)
+        
+    //     if (data.role !== "Student") {
+    //       // message("your data is unauthirized")
+    //       return router.push("/unauthorized")
+    //     }
+  
+    //     if (!response.ok) {
+    //       alert("not response okay")
+    //       toast("Something went wrong!")
+    //       return router.push("/")
+    //     }
+  
+    //     return router.push("/student/dashboard")
+  
+    //   } catch (error) {
+    //     console.error(error)
+    //     toast("Something went wrong")
+    //     return router.push("/")
+    //   }
+    // }
+
   useEffect(() => {
     const email = sessionStorage.getItem("userEmail");
     if (email) {
@@ -31,6 +69,7 @@ export default function StudentApplications() {
   }, []);
 
   useEffect(() => {
+    // AuthorizeUser();
     if (!userEmail) return;
     const fetchApplications = async () => {
       try {

@@ -2,6 +2,8 @@
 import { useState, useEffect, useMemo } from "react";
 import Footer from "../../foot/footer";
 import { useSession } from "next-auth/react";
+import { toast } from "react-toastify";
+import { useRouter } from "next/navigation";
 
 // Custom Student Navbar
 function StudentNavbar() {
@@ -112,7 +114,44 @@ export default function StudentDashboard() {
 
   // const { data: session, status } = useSession();
 
+    // const router = useRouter()
+    
+    // const AuthorizeUser = async () => {
+    //   try {
+    //     const email = sessionStorage.getItem("userEmail")
+    //     const response = await fetch("/api/auth/role", {
+    //       method: "POST",
+    //       headers: {
+    //         'Content-Type': 'application/json'
+    //       },
+    //       body: JSON.stringify({ email })
+    //     })
+        
+    //     const data = await response.json()
+    //     console.log(data)
+        
+    //     if (data.role !== "Student") {
+    //       // message("your data is unauthirized")
+    //       return router.push("/unauthorized")
+    //     }
+  
+    //     if (!response.ok) {
+    //       alert("not response okay")
+    //       toast("Something went wrong!")
+    //       return router.push("/")
+    //     }
+  
+    //     return router.push("/student/dashboard")
+  
+    //   } catch (error) {
+    //     console.error(error)
+    //     toast("Something went wrong")
+    //     return router.push("/")
+    //   }
+    // }
+
   useEffect(() => {
+    // AuthorizeUser();
     const fetchJobPostings = async () => {
       try {
         const res = await fetch("/api/admin/dashboard");

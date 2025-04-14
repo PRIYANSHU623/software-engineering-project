@@ -120,10 +120,11 @@ export async function PATCH(request, { params }) {
 }
 
 export async function DELETE(request, { params }) {
+  console.log("Error:", params);
   try {
     await connectDB();
     const { id } = params;
-
+  
     const deletedTraining = await Training.findByIdAndDelete(id);
     if (!deletedTraining) {
       return NextResponse.json(
