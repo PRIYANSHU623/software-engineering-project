@@ -61,7 +61,7 @@ export default function TrainingProgramsPage() {
     <div className="min-h-screen bg-gray-50">
       <StudentNavbar />
       <div className="container mx-auto px-6 py-10">
-        <h1 className="text-4xl font-bold text-center mb-8 text-green-800">
+        <h1 className="text-4xl font-bold text-center mb-8 text-black">
           Approved Training Programs
         </h1>
 
@@ -72,7 +72,7 @@ export default function TrainingProgramsPage() {
             placeholder="Search by title, provider, or skills..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full md:w-1/2 px-4 py-2 border border-gray-300 rounded shadow-sm focus:outline-none focus:ring-2 focus:ring-green-500"
+            className="w-full md:w-1/2 px-4 py-2 text-black border border-gray-300 rounded shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 placeholder:text-black"
           />
         </div>
 

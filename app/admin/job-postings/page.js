@@ -127,7 +127,7 @@ export default function JobPostingsPage() {
         </div>
       </div>
       <div className="container mx-auto px-4 py-8">
-        <h1 className="text-3xl font-bold mb-6 text-center text-green-800">
+        <h1 className="text-3xl font-bold mb-6 text-center text-black">
           Job Postings Management
         </h1>
 

@@ -102,14 +102,10 @@ function JobDetailsModal({ job, onClose, onApply }) {
 }
 
 export default function StudentDashboard() {
-  // State for job postings (available jobs)
   const [jobPostings, setJobPostings] = useState([]);
-  // State for applied jobs and notifications fetched from student endpoints
   const [appliedJobs, setAppliedJobs] = useState([]);
   const [notifications, setNotifications] = useState([]);
-  // State for search term to filter job postings
   const [search, setSearch] = useState("");
-  // State to track which job's details are being viewed
   const [selectedJob, setSelectedJob] = useState(null);
 
   // const { data: session, status } = useSession();
@@ -169,13 +165,22 @@ export default function StudentDashboard() {
 
     const fetchAppliedJobs = async () => {
       try {
-        const res = await fetch("/api/students/applied-jobs");
+        const userEmail = sessionStorage.getItem("userEmail"); // or useSession, etc.
+      if (!userEmail) {
+        console.error("User email not available");
+        return;
+      }
+        const res = await fetch(`/api/students/applied-jobs-count?email=${userEmail}`);
         const data = await res.json();
-        setAppliedJobs(data);
+        if (data.ok) {
+          setAppliedJobs(data.count);
+        }
+        console.log(data.count.length)
       } catch (err) {
-        console.error("Error fetching applied jobs:", err);
+        console.error("Error fetching applied job count:", err);
       }
     };
+    
 
     const fetchNotifications = async () => {
       try {
@@ -190,11 +195,10 @@ export default function StudentDashboard() {
     
 
     fetchJobPostings();
-    // fetchAppliedJobs();
+    fetchAppliedJobs();
     fetchNotifications();
   }, []);
 
-  // Search functionality: filter job postings by title
   const filteredJobPostings = useMemo(() => {
     return jobPostings.filter((job) =>
       job.title.toLowerCase().includes(search.toLowerCase())
@@ -238,9 +242,6 @@ export default function StudentDashboard() {
     }
   };
   
-  
-  
-
   // Handle the "Apply" action (only available when status === "approved")
   const handleApply = async (jobId) => {
     try {
@@ -274,156 +275,124 @@ export default function StudentDashboard() {
       <StudentNavbar />
 
       <div className="container mx-auto px-6 py-10">
-        <h1 className="text-4xl font-bold text-center mb-8 text-green-800">
-          Student Dashboard
-        </h1>
+  <h1 className="text-4xl font-bold text-center mb-8 text-green-800">
+    Student Dashboard
+  </h1>
 
-        {/* Key Stats Section */}
-        <section className="mb-12 grid grid-cols-1 sm:grid-cols-2 gap-6">
-          <div className="bg-white shadow-md hover:shadow-xl rounded-lg p-6 text-center">
-            <h3 className="text-xl font-semibold text-gray-700">Available Jobs</h3>
-            <p className="mt-2 text-4xl font-bold text-blue-600">
-              {jobPostings.length}
+  {/* Layout Grid: Notifications on Left, Main Dashboard on Right */}
+  <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
+    {/* Notifications - Now on the Left */}
+    <aside className="lg:col-span-1 bg-white p-6 rounded-lg shadow border">
+      <h3 className="text-xl font-semibold text-gray-800 mb-4">Notifications</h3>
+      <div className="space-y-3 max-h-full overflow-y-auto">
+        {notifications.length > 0 ? (
+          notifications.map((notif, index) => (
+            <p
+              key={notif._id || index}
+              className="p-2 bg-gray-100 rounded text-gray-700 text-sm hover:bg-gray-200 transition"
+            >
+              {notif.message}
             </p>
-          </div>
-          <div className="bg-white shadow-md hover:shadow-xl rounded-lg p-6 text-center">
-            <h3 className="text-xl font-semibold text-gray-700">Applied Jobs</h3>
-            <p className="mt-2 text-4xl font-bold text-green-600">
-              {appliedJobs?.length ?? 0}
-            </p>
-          </div>
+          ))
+        ) : (
+          <p className="text-center text-gray-500 text-lg">
+            No New Notifications
+          </p>
+        )}
+      </div>
+    </aside>
 
-        </section>
+    {/* Main Dashboard Content */}
+    <div className="lg:col-span-3 space-y-12">
+      {/* Key Stats */}
+      <section className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+        <div className="bg-white shadow-md hover:shadow-xl rounded-lg p-6 text-center">
+          <h3 className="text-xl font-semibold text-gray-700">Available Jobs</h3>
+          <p className="mt-2 text-4xl font-bold text-blue-600">{jobPostings.length}</p>
+        </div>
+        <div className="bg-white shadow-md hover:shadow-xl rounded-lg p-6 text-center">
+          <h3 className="text-xl font-semibold text-gray-700">Applied Jobs</h3>
+          <p className="mt-2 text-4xl font-bold text-green-600">
+            {appliedJobs ?? 0}
+          </p>
+        </div>
+      </section>
 
-        {/* Job Postings Section */}
-        <section className="mb-12">
-          <h2 className="text-3xl font-semibold text-gray-800 mb-4">
-            Job Postings
-          </h2>
-          <div className="flex justify-left mb-6">
-            <input
-              type="text"
-              placeholder="Search job postings..."
-              className="border border-gray-300 p-2 w-full placeholder:text-black max-w-md rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-            />
-          </div>
-          <div className="lg:col-span-3 space-y-6">
-            {filteredJobPostings.length > 0 ? (
-              filteredJobPostings.map((job) => (
-                <div key={job._id} 
-                className="bg-white p-6 rounded-lg shadow border hover:shadow-lg transition duration-200">
-                  <h3 className="text-xl font-bold text-gray-800">{job.title}</h3>
-                  <p className="text-gray-600">{job.company}</p>
-                  <p className="mt-2 text-gray-700">{job.description.slice(0, 100)}...</p>
-                  <div className="mt-4 flex flex-wrap gap-2">
+      {/* Job Postings */}
+      <section>
+        <h2 className="text-3xl font-semibold text-gray-800 mb-4">
+          Job Postings
+        </h2>
+        <div className="flex justify-left mb-6">
+          <input
+            type="text"
+            placeholder="Search job postings..."
+            className="border border-gray-300 p-2 w-full text-black placeholder:text-black max-w-md rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+          />
+        </div>
+        <div className="space-y-6">
+          {filteredJobPostings.length > 0 ? (
+            filteredJobPostings.map((job) => (
+              <div
+                key={job._id}
+                className="bg-white p-6 rounded-lg shadow border hover:shadow-lg transition duration-200"
+              >
+                <h3 className="text-xl font-bold text-gray-800">{job.title}</h3>
+                <p className="text-gray-600">{job.company}</p>
+                <p className="mt-2 text-gray-700">
+                  {job.description.slice(0, 100)}...
+                </p>
+                <div className="mt-4 flex flex-wrap gap-2">
+                  <button
+                    onClick={() => setSelectedJob(job)}
+                    className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition"
+                  >
+                    View Details
+                  </button>
+                  {job.status === "none" && (
                     <button
-                      onClick={() => setSelectedJob(job)}
+                      onClick={() => handleInterested(job._id)}
+                      className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 transition"
+                    >
+                      Interested
+                    </button>
+                  )}
+                  {job.status === "interested" && (
+                    <button
+                      disabled
+                      className="bg-yellow-500 text-white px-4 py-2 rounded cursor-not-allowed"
+                    >
+                      Waiting for Approval
+                    </button>
+                  )}
+                  {job.status === "approved" && (
+                    <button
+                      onClick={() => handleApply(job._id)}
                       className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition"
                     >
-                      View Details
+                      Apply
                     </button>
-                    {job.status === "none" && (
-                      <button
-                        onClick={() => handleInterested(job._id)}
-                        className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 transition"
-                      >
-                        Interested
-                      </button>
-                    )}
-                    {job.status === "interested" && (
-                      <button
-                        disabled
-                        className="bg-yellow-500 text-white px-4 py-2 rounded cursor-not-allowed"
-                      >
-                        Waiting for Approval
-                      </button>
-                    )}
-                    {job.status === "approved" && (
-                      <button
-                        onClick={() => handleApply(job._id)}
-                        className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition"
-                      >
-                        Apply
-                      </button>
-                    )}
-                    {job.status === "applied" && (
-                      <span className="bg-gray-300 text-gray-700 px-4 py-2 rounded inline-block">
-                        Applied
-                      </span>
-                    )}
-                  </div>
+                  )}
+                  {job.status === "applied" && (
+                    <span className="bg-gray-300 text-gray-700 px-4 py-2 rounded inline-block">
+                      Applied
+                    </span>
+                  )}
                 </div>
-              ))
-            ) : (
-              <p className="text-gray-600 text-center col-span-2">
-                No job postings found.
-              </p>
-            )}
-          </div>
-        </section>
-
-        {/* Applied Jobs Section */}
-        {/* <section className="mb-12">
-          <h2 className="text-3xl font-semibold text-gray-800 mb-4">
-            My Applications
-          </h2>
-          <div className="bg-white shadow rounded-lg overflow-x-auto">
-            <table className="w-full">
-              <thead className="bg-gray-200">
-                <tr>
-                  <th className="text-left p-3">Job Title</th>
-                  <th className="text-left p-3">Company</th>
-                  <th className="text-left p-3">Status</th>
-                </tr>
-              </thead>
-              <tbody>
-                {appliedJobs.length > 0 ? (
-                  appliedJobs.map((job) => (
-                    <tr key={job._id} className="border-b hover:bg-gray-100">
-                      <td className="p-3">{job.title}</td>
-                      <td className="p-3">{job.company}</td>
-                      <td className="p-3">
-                        <span className="bg-blue-100 text-blue-700 px-3 py-1 rounded-full">
-                          {job.status}
-                        </span>
-                      </td>
-                    </tr>
-                  ))
-                ) : (
-                  <tr>
-                    <td colSpan="3" className="p-4 text-center text-gray-600">
-                      No applications found.
-                    </td>
-                  </tr>
-                )}
-              </tbody>
-            </table>
-          </div>
-        </section> */}
-
-        {/* Notifications Section */}
-          <aside className="lg:col-span-1 bg-white p-6 rounded-lg shadow border">
-            <h3 className="text-xl font-semibold text-gray-800 mb-4">Notifications</h3>
-            <div className="space-y-3 max-h-96 overflow-y-auto">
-              {notifications.length > 0 ? (
-                notifications.map((notif, index) => (
-                  <p
-                    key={notif._id || index}
-                    className="p-2 bg-gray-100 rounded text-gray-700 text-sm hover:bg-gray-200 transition"
-                  >
-                    {notif.message}
-                  </p>
-                ))
-              ) : (
-                <p className="text-center text-gray-500 text-lg">
-                  No New Notifications
-                </p>
-              )}
-            </div>
-          </aside>
-      </div>
+              </div>
+            ))
+          ) : (
+            <p className="text-gray-600 text-center col-span-2">
+              No job postings found.
+            </p>
+          )}
+        </div>
+      </section>
+    </div>
+  </div>
+</div>
 
       <Footer />
 

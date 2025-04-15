@@ -52,37 +52,6 @@ export async function GET(req) {
   }
 }
 
-
-// export async function GET(req) {
-//   await connectDB();
-//   try {
-//     const { searchParams } = new URL(req.url);
-//     const email = req.nextUrl.searchParams.get("email");
-//     console.log("AppliedJobs GET: email =", email);
-//     if (!email) {
-//       return NextResponse.json(
-//         { ok: false, message: "Email parameter is required" },
-//         { status: 400 }
-//       );
-//     }
-//     const student = await Students.findOne({ email });
-//     if (!student) {
-//       return NextResponse.json(
-//         { ok: false, message: "Student not found" },
-//         { status: 404 }
-//       );
-//     }
-//     const appliedJobs = await JobPostings.find({ students: { $in: [email] } });
-//     return NextResponse.json({ ok: true, appliedJobs, count: appliedJobs.length }, { status: 200 });
-//   } catch (error) {
-//     console.error("Error in GET /api/student/applied-jobs:", error);
-//     return NextResponse.json(
-//       { ok: false, message: error.message },
-//       { status: 500 }
-//     );
-//   }
-// }
-
 export async function POST(req) {
   await connectDB();
   try {
