@@ -100,7 +100,7 @@ export default function JobPostingsPage() {
         <div className="container mx-auto flex justify-between items-center px-6">
           <div className="flex items-center space-x-4">
             <img src="/logo.png" alt="IIIT Logo" className="w-12" />
-            <p className="text-lg font-semibold">Training and Placement Cell Website</p>
+            <p className="text-lg font-semibold">Training &amp; Placement Cell Website</p>
           </div>
           <div className="">
             <a href="/admin/dashboard" className="font-semibold hover:text-blue-300 mr-4">

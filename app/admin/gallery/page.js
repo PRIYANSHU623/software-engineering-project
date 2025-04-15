@@ -113,7 +113,7 @@ export default function GalleryPage() {
         <div className="container mx-auto flex justify-between items-center px-6">
           <div className="flex items-center space-x-4">
             <img src="/logo.png" alt="IIIT Logo" className="w-12" />
-            <p className="text-lg font-semibold">Training &amp; Placement Cell Website</p>
+            <p className="text-lg font-semibold">Training &amp; Placement Cell</p>
           </div>
           <div>
             <a href="/admin/dashboard" className="font-semibold hover:text-blue-300 mr-4">Dashboard</a>

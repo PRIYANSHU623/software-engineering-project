@@ -12,7 +12,7 @@ const Navbar = ({ item }) => {
             <div className="container mx-auto flex justify-between items-center px-6">
                 <div className="flex items-center space-x-4">
                     <img src="logo.png" alt="IIIT Logo" className="w-12" />
-                    <p className="text-lg font-semibold">Training &amp; Placement Cell</p>
+                    <p className="text-lg font-semibold cursor-pointer" onClick={() => window.location.href = '/'}>Training &amp; Placement Cell</p>
                 </div>
                 <div>
                     <ul className="flex space-x-6">

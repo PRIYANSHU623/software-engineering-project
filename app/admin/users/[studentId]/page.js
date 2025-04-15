@@ -9,10 +9,10 @@ function StudentNavbar() {
     <nav className="bg-blue-900 text-white p-4 flex justify-between items-center">
       <div className="text-2xl font-bold">Student Panel</div>
       <div>
-        <a href="/student/dashboard" className="px-4 hover:text-gray-300">Dashboard</a>
+        {/* <a href="/student/dashboard" className="px-4 hover:text-gray-300">Dashboard</a>
         <a href="/student/profile" className="px-4 hover:text-gray-300">Profile</a>
         <a href="/student/applications" className="px-4 hover:text-gray-300">My Applications</a>
-        <a href="/logout" className="px-4 hover:text-gray-300">Logout</a>
+        <a href="/logout" className="px-4 hover:text-gray-300">Logout</a> */}
       </div>
     </nav>
   );
