@@ -46,19 +46,19 @@ export default function Statistics() {
           ) : cards.length > 0 ? (
             <>
               <div className="mt-10 grid md:grid-cols-3 gap-8">
-                <div className="bg-white p-6 rounded-lg shadow-md">
+                <div className="bg-white p-6 rounded-lg shadow-md transform transition duratiob-300 hover:scale-105">
                   <h3 className="text-2xl font-bold text-blue-600">
                     {cards[0]?.placement_rate || "N/A"}
                   </h3>
                   <p className="text-gray-700">Placement Rate</p>
                 </div>
-                <div className="bg-white p-6 rounded-lg shadow-md">
+                <div className="bg-white p-6 rounded-lg shadow-md transform transition duratiob-300 hover:scale-105">
                   <h3 className="text-2xl font-bold text-blue-600">
                     {cards[0]?.recruiting_partners || "N/A"}
                   </h3>
                   <p className="text-gray-700">Recruiting Partners</p>
                 </div>
-                <div className="bg-white p-6 rounded-lg shadow-md">
+                <div className="bg-white p-6 rounded-lg shadow-md transform transition duratiob-300 hover:scale-105">
                   <h3 className="text-2xl font-bold text-blue-600">
                     {cards[0]?.students_placed || "N/A"}
                   </h3>
@@ -71,7 +71,7 @@ export default function Statistics() {
                 <img
                   src={`data:image/jpeg;base64,${storedImages["Placement Graph"]}`}
                   alt="Placement Graph"
-                  className="mt-4 rounded-lg shadow-lg w-full max-w-xl mx-auto"
+                  className="mt-4 rounded-lg shadow-lg w-full max-w-xl mx-auto transform transition duratiob-300 hover:scale-105"
                 />
               </div>
             </>
