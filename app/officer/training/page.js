@@ -13,12 +13,12 @@ function StudentNavbar() {
         <p className="text-lg font-semibold">Training & Placement Cell</p>
       </div>
       <div>
-      <a href="/officer/dashboard" className="hover:text-blue-400 mr-5 font-semibold">Dashboard</a>
-            <button onClick={() => setIsModalOpen(true)} className="hover:text-blue-400 font-semibold mr-5">Add Job</button>
-            <button onClick={() => setIsTrainingModalOpen(true)} className="hover:text-blue-400 mr-5 font-semibold">Add Training</button>
+      <a href="/officer/dashboard" className="hover:text-blue-300 mr-5 font-semibold">Dashboard</a>
+            <button onClick={() => setIsModalOpen(true)} className="hover:text-blue-300 font-semibold mr-5">Add Job</button>
+            <button onClick={() => setIsTrainingModalOpen(true)} className="hover:text-blue-300 mr-5 font-semibold">Add Training</button>
             <a href="/officer/training" className="text-blue-300 mr-5 font-semibold">Approved Training</a>
-            <a href="/officer/profile" className="hover:text-blue-400 mr-5 font-semibold">Profile</a>
-            <a href="/" className="hover:text-blue-400 mr-5 font-semibold">Logout</a>
+            <a href="/officer/profile" className="hover:text-blue-300 mr-5 font-semibold">Profile</a>
+            <a href="/" className="hover:text-blue-300 mr-5 font-semibold">Logout</a>
       </div>
     </nav>
   );

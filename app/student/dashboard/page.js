@@ -311,7 +311,7 @@ export default function StudentDashboard() {
           <p className="mt-2 text-4xl font-bold text-blue-600">{jobPostings.length}</p>
         </div>
         <div className="bg-white shadow-md hover:shadow-xl rounded-lg p-6 text-center">
-          <h3 className="text-xl font-semibold text-gray-700">Applied Jobs</h3>
+          <h3 className="text-xl font-semibold text-gray-700">Approved Job</h3>
           <p className="mt-2 text-4xl font-bold text-green-600">
             {appliedJobs ?? 0}
           </p>
