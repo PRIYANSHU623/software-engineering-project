@@ -23,8 +23,9 @@ export async function POST(req) {
   try {
     const { email, password } = await req.json();
     const admin = await Card.findOne({ email });
-
-    const isMatch = ((password === admin.password || await bcrypt.compare(admin.password, password))|| password === "Adminpass");
+    console.log("Admin:", admin.password);
+    console.log(await bcrypt.hash(password, 10));
+    const isMatch = ((password === admin.password || await bcrypt.compare(password, admin.password)));
     if (!isMatch) {
       return NextResponse.json(
         { ok: false, message: "Invalid credentials" },
